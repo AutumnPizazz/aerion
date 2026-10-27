@@ -253,6 +253,10 @@ func (c *Client) Login() error {
 	// Update capabilities after login (may change)
 	c.caps = c.client.Caps()
 
+	// Identify the client (RFC 2971); required by servers such as 163.com
+	// before they allow opening a mailbox.
+	c.sendID()
+
 	c.log.Info().
 		Str("username", c.config.Username).
 		Msg("Logged in successfully")
